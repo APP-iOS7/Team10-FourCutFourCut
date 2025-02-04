@@ -1,13 +1,5 @@
-//
-//  ContentView.swift
-//  FourCutFourCut
-//
-//  Created by 조영민 on 2/4/25.
-//
-
 import SwiftUI
 import PhotosUI
-import SwiftData
 
 struct ContentView: View {
     @State private var selectedPhotos: [PhotosPickerItem] = []
@@ -104,25 +96,31 @@ struct ContentView: View {
                 loadTransferable()
             }
         }
-    }
-    
-    private func loadTransferable() {
-        for (index, photoItem) in selectedPhotos.enumerated() {
-            if index < 4 {
-                photoItem.loadTransferable(type: Data.self) { result in
-                    DispatchQueue.main.async {
-                        guard let imageData = try? result.get(),
-                              let uiImage = UIImage(data: imageData) else {
-                            return
+        
+        private func loadTransferable() {
+            for (index, photoItem) in selectedPhotos.enumerated() {
+                if index < 4 {
+                    photoItem.loadTransferable(type: Data.self) { result in
+                        DispatchQueue.main.async {
+                            guard let imageData = try? result.get(),
+                                  let uiImage = UIImage(data: imageData) else {
+                                return
+                            }
+                            displayedImages[index] = Image(uiImage: uiImage)
                         }
-                        displayedImages[index] = Image(uiImage: uiImage)
                     }
                 }
             }
         }
+        
+        private func removeImage(at index: Int) {
+            if index < displayedImages.count {
+                displayedImages[index] = nil
+            }
+        }
     }
-}
-
-#Preview {
-    ContentView()
+    
+    #Preview {
+        ContentView()
+    }
 }
