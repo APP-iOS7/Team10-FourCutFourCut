@@ -10,6 +10,10 @@ import PhotosUI
 
 struct FrameImages: View {
     @State private var displayedImages: [Image?]
+    
+    init(displayedImages: [Image?]) {
+        self.displayedImages = displayedImages
+    }
 
     var body: some View {
         ZStack {
@@ -45,9 +49,15 @@ struct FrameImages: View {
             .padding()
         }
     }
+    
+    private func removeImage(at index: Int) {
+        if index < displayedImages.count {
+            displayedImages[index] = nil
+        }
+    }
 }
 
 
 #Preview {
-    FrameImages()
+    FrameImages(displayedImages: [nil, nil, nil, nil])
 }
