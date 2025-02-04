@@ -1,13 +1,5 @@
-//
-//  ContentView.swift
-//  FourCutFourCut
-//
-//  Created by 조영민 on 2/4/25.
-//
-
 import SwiftUI
 import PhotosUI
-import SwiftData
 
 struct ContentView: View {
     @State private var selectedPhotos: [PhotosPickerItem] = []
@@ -24,17 +16,31 @@ struct ContentView: View {
                     .font(.title)
                     .foregroundColor(.white)
                     .padding(.top, 20)
+                
                 // 프레임 이미지와 선택된 사진들
                 ZStack {
                     // 선택된 사진들을 배치할 VStack
                     VStack(spacing: 8) {
                         ForEach(0..<4) { index in
                             if let image = displayedImages[index] {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 250, height: 150)
-                                    .clipped()
+                                ZStack {
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 250, height: 150)
+                                        .clipped()
+                                    Button(action: {
+                                        removeImage(at: index)
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.white)
+                                            .padding(8)
+                                            .background(Color.black.opacity(0.6))
+                                            .clipShape(Circle())
+                                            .padding(5)
+                                    }
+                                    .position(x: 230, y: 20) // 버튼 위치 조정
+                                }
                             } else {
                                 Rectangle()
                                     .fill(Color.gray.opacity(0.3))
@@ -80,8 +86,13 @@ struct ContentView: View {
             }
         }
     }
+    
+    private func removeImage(at index: Int) {
+        if index < displayedImages.count {
+            displayedImages[index] = nil
+        }
+    }
 }
-
 
 #Preview {
     ContentView()
