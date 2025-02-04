@@ -10,12 +10,8 @@ import PhotosUI
 import SwiftData
 
 struct ContentView: View {
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImage: UIImage? = nil
-    
-    let frameWidth: CGFloat = 300
-    let frameHeight: CGFloat = 400
-    let phtoSpacing: CGFloat = 10
+    @State private var selectedPhotos: [PhotosPickerItem] = []
+    @State private var displayedImages: [Image?] = Array(repeating: nil, count: 4)
     
     var body: some View {
         ZStack {
@@ -23,48 +19,68 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             
-            // 메인 프레임
-            VStack(spacing: 10) {
-                // 상단 타이틀
+            VStack {
                 Text("포컷포컷")
                     .font(.title)
                     .foregroundColor(.white)
                     .padding(.top, 20)
-                
-                // 사진 프레임들
-                VStack(spacing: 8) {
-                    ForEach(0..<4) { _ in
-                        Rectangle()
-                            .fill(Color.white)
-                            .frame(width: 250, height: 150)
-                            .cornerRadius(8)
+                // 프레임 이미지와 선택된 사진들
+                ZStack {
+                    // 선택된 사진들을 배치할 VStack
+                    VStack(spacing: 8) {
+                        ForEach(0..<4) { index in
+                            if let image = displayedImages[index] {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 250, height: 150)
+                                    .clipped()
+                            } else {
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(width: 250, height: 150)
+                            }
+                        }
                     }
+                    .padding()
                 }
-                .padding()
                 
-                Spacer()
-                
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                // 사진 선택 버튼
+                PhotosPicker(
+                    selection: $selectedPhotos,
+                    maxSelectionCount: 4,
+                    matching: .images
+                ) {
                     Text("사진 선택하기")
+                        .foregroundColor(.white)
                         .padding()
                         .background(Color.blue)
-                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                .onChange(of: selectedItem) { newItem in
-                    Task {
-                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                            selectedImage = UIImage(data: data)
+                .padding(.bottom, 20)
+            }
+        }
+        .onChange(of: selectedPhotos) { _ in
+            loadTransferable()
+        }
+    }
+    
+    private func loadTransferable() {
+        for (index, photoItem) in selectedPhotos.enumerated() {
+            if index < 4 {
+                photoItem.loadTransferable(type: Data.self) { result in
+                    DispatchQueue.main.async {
+                        guard let imageData = try? result.get(),
+                              let uiImage = UIImage(data: imageData) else {
+                            return
                         }
+                        displayedImages[index] = Image(uiImage: uiImage)
                     }
                 }
             }
-            .padding()
         }
     }
 }
-
-
 
 
 #Preview {
