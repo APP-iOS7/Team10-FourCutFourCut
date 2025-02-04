@@ -1,15 +1,22 @@
+//
+//  ContentView.swift
+//  FourCutFourCut
+//
+//  Created by 조영민 on 2/4/25.
+//
+
+
 import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
     @State private var selectedPhotos: [PhotosPickerItem] = []
-    @State private var displayedImages: [Image?] = Array(repeating: nil, count: 4)
+    @State private var displayedImages: [UIImage?] = Array(repeating: nil, count: 4)
+    @State private var showingSaveAlert = false
     
     var body: some View {
         ZStack {
-            // 배경
-            Color.black
-                .ignoresSafeArea()
+            Color.black.ignoresSafeArea()
             
             VStack {
                 Text("포컷포컷")
@@ -17,14 +24,16 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .padding(.top, 20)
                 
-                // 프레임 이미지와 선택된 사진들
                 ZStack {
-                    // 선택된 사진들을 배치할 VStack
+                    Rectangle()
+                        .fill(Color.white)
+                        .frame(width: 280, height: 680)
+                    
                     VStack(spacing: 8) {
                         ForEach(0..<4) { index in
-                            if let image = displayedImages[index] {
+                            if let uiImage = displayedImages[index] {
                                 ZStack {
-                                    image
+                                    Image(uiImage: uiImage)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 250, height: 150)
@@ -39,7 +48,7 @@ struct ContentView: View {
                                             .clipShape(Circle())
                                             .padding(5)
                                     }
-                                    .position(x: 230, y: 20) // 버튼 위치 조정
+                                    .position(x: 230, y: 20)
                                 }
                             } else {
                                 Rectangle()
@@ -51,24 +60,63 @@ struct ContentView: View {
                     .padding()
                 }
                 
-                // 사진 선택 버튼
-                PhotosPicker(
-                    selection: $selectedPhotos,
-                    maxSelectionCount: 4,
-                    matching: .images
-                ) {
-                    Text("사진 선택하기")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                HStack(spacing: 20) {
+                    PhotosPicker(
+                        selection: $selectedPhotos,
+                        maxSelectionCount: 4,
+                        matching: .images
+                    ) {
+                        Text("사진 선택하기")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    
+                    Button(action: {
+                        saveToPhotoAlbum()
+                    }) {
+                        Text("이미지 저장")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
                 }
                 .padding(.bottom, 20)
             }
         }
-        .onChange(of: selectedPhotos) { _ in
+        .onChange(of: selectedPhotos) {
             loadTransferable()
         }
+        .alert("저장 완료", isPresented: $showingSaveAlert) {
+            Button("확인", role: .cancel) { }
+        } message: {
+            Text("이미지가 앨범에 저장되었습니다.")
+        }
+    }
+    
+    private func saveToPhotoAlbum() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 280, height: 680))
+        let uiImage = renderer.image { context in
+            UIColor.white.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 280, height: 680))
+            
+            for (index, image) in displayedImages.enumerated() {
+                if let image = image {
+                    
+                    let aspectRatio = CGSize(width: image.size.width / image.size.height, height: 1.0)
+                    let newHeight = 150
+                    let newWidth = newHeight * Int(aspectRatio.width)
+                    let rect = CGRect(x: 15, y: 20 + (index * 158), width: newWidth, height: newHeight)
+                    
+                    image.draw(in: rect)
+                }
+            }
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+        showingSaveAlert = true
     }
     
     private func loadTransferable() {
@@ -80,7 +128,7 @@ struct ContentView: View {
                               let uiImage = UIImage(data: imageData) else {
                             return
                         }
-                        displayedImages[index] = Image(uiImage: uiImage)
+                        displayedImages[index] = uiImage
                     }
                 }
             }
@@ -96,5 +144,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
