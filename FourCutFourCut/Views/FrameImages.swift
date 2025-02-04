@@ -1,25 +1,27 @@
-//
-//  FrameImages.swift
-//  FourCutFourCut
-//
-//  Created by 최시온 on 2/4/25.
-//
-
 import SwiftUI
-import PhotosUI
 
 struct FrameImages: View {
-    @State private var displayedImages: [Image?]
-    
-    init(displayedImages: [Image?]) {
-        self.displayedImages = displayedImages
-    }
+    @Binding var displayedImages: [Image?]
+    var backgroundImage: String?
 
     var body: some View {
         ZStack {
-            // 선택된 사진들을 배치할 VStack
+            // 배경 이미지 설정
+            if let bgImage = backgroundImage {
+                Image(bgImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
+                    .ignoresSafeArea()
+            } else {
+                Color.black
+                    .ignoresSafeArea()
+            }
+
+            // VStack 설정
             VStack(spacing: 8) {
-                ForEach(0..<4) { index in
+                ForEach(0..<4, id: \.self) { index in
                     if let image = displayedImages[index] {
                         ZStack {
                             image
@@ -28,7 +30,7 @@ struct FrameImages: View {
                                 .frame(width: 250, height: 150)
                                 .clipped()
                             Button(action: {
-                                removeImage(at: index)
+                                displayedImages[index] = nil
                             }) {
                                 Image(systemName: "trash")
                                     .foregroundColor(.white)
@@ -46,18 +48,11 @@ struct FrameImages: View {
                     }
                 }
             }
-            .padding()
-        }
-    }
-    
-    private func removeImage(at index: Int) {
-        if index < displayedImages.count {
-            displayedImages[index] = nil
+            .padding(10) // 내부 여백 추가
         }
     }
 }
 
-
 #Preview {
-    FrameImages(displayedImages: [nil, nil, nil, nil])
+    ContentView()
 }
