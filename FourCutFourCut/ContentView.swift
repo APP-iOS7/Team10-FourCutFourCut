@@ -6,54 +6,66 @@
 //
 
 import SwiftUI
+import PhotosUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImage: UIImage? = nil
+    
+    let frameWidth: CGFloat = 300
+    let frameHeight: CGFloat = 400
+    let phtoSpacing: CGFloat = 10
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        ZStack {
+            // 배경
+            Color.black
+                .ignoresSafeArea()
+            
+            // 메인 프레임
+            VStack(spacing: 10) {
+                // 상단 타이틀
+                Text("포컷포컷")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
+                
+                // 사진 프레임들
+                VStack(spacing: 8) {
+                    ForEach(0..<4) { _ in
+                        Rectangle()
+                            .fill(Color.white)
+                            .frame(width: 250, height: 150)
+                            .cornerRadius(8)
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                .padding()
+                
+                Spacer()
+                
+                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                    Text("사진 선택하기")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                .onChange(of: selectedItem) { newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                            selectedImage = UIImage(data: data)
+                        }
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            .padding()
         }
     }
 }
+
+
+
 
 #Preview {
     ContentView()
