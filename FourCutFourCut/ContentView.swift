@@ -96,6 +96,7 @@ struct ContentView: View {
                 loadTransferable()
             }
         }
+    }
         
         private func loadTransferable() {
             for (index, photoItem) in selectedPhotos.enumerated() {
@@ -119,8 +120,7 @@ struct ContentView: View {
             }
         }
     }
-    
     #Preview {
         ContentView()
+        .modelContainer(for: Item.self, inMemory: true)
     }
-}
