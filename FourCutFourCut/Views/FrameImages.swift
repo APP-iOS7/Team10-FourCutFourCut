@@ -9,11 +9,17 @@ struct FrameImages: View {
             // 배경 이미지 설정
             if let bgImage = backgroundImage {
                 Image(bgImage)
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fill)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .clipped()
+//                    .ignoresSafeArea()
+                
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .clipped()
+                    .scaledToFill()
                     .ignoresSafeArea()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 화면 크기 맞추기
+                    .clipped()
             } else {
                 Color.black
                     .ignoresSafeArea()
