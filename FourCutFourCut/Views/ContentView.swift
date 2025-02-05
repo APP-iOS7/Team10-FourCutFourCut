@@ -5,7 +5,6 @@
 //  Created by 조영민 on 2/4/25.
 //
 
-
 import SwiftUI
 import PhotosUI
 
@@ -18,9 +17,7 @@ struct ContentView: View {
     @State private var showingSaveAlert = false
     // 선택된 배경 이미지를 저장하는 상태 변수
     @State private var backgroundImage: String? = nil
-    
     @State private var showDeleteButtons = true
-    
     
     // 사용 가능한 배경 이미지 목록
     let backgroundImages = ["bg1", "bg2", "bg3", "bg4", "bg5"]
@@ -73,7 +70,6 @@ struct ContentView: View {
                 }
                 .padding(.vertical, 10)
                 // 하단 기능 버튼
-                // 하단 기능 버튼
                 HStack(spacing: 20) {
                     // 사진 선택 버튼
                     PhotosPicker(
@@ -89,8 +85,8 @@ struct ContentView: View {
                         }
                         .padding(10)
                         .background(Color.teal)
+                        .bold()
                         .cornerRadius(15)
-                        .shadow(color: .gray, radius: 5, x: 0, y: 5)
                         .scaleEffect(1.1, anchor: .center)
                         .animation(.easeInOut(duration: 0.2), value: selectedPhotos.count)
                     }
@@ -106,9 +102,9 @@ struct ContentView: View {
                                 .foregroundColor(.white)
                         }
                         .padding(10)
+                        .bold()
                         .background(Color.green)
                         .cornerRadius(15)
-                        .shadow(color: .gray, radius: 5, x: 0, y: 5)
                         .scaleEffect(1.1, anchor: .center)
                         .animation(.easeInOut(duration: 0.2), value: showingSaveAlert)
                     }
@@ -133,7 +129,7 @@ struct ContentView: View {
     private func saveToPhotoAlbum() {
         let renderer = ImageRenderer(content: ZStack {
             FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false)
-                .frame(width: 270, height: 650)
+                .frame(width: 240, height: 700)
         })
         renderer.scale = UIScreen.main.scale
         

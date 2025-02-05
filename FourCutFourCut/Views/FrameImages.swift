@@ -12,7 +12,7 @@ struct FrameImages: View {
                 Image(bgImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 270, maxHeight: 650)
+                    .frame(maxWidth: 240, maxHeight: 700) 
                     .clipped()
             } else {
                 Color.black
@@ -25,7 +25,7 @@ struct FrameImages: View {
                             image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 250, height: 150)
+                                .frame(width: 190, height: 150)
                                 .clipped()
                             if showDeleteButtons {
                                 Button(action: {
@@ -44,11 +44,12 @@ struct FrameImages: View {
                     } else {
                         Rectangle()
                             .fill(Color.gray.opacity(0.3))
-                            .frame(width: 250, height: 150)
+                            .frame(width: 190, height: 150)
                     }
                 }
             }
-            .padding(10) // 내부 여백 추가
+            .padding(.top, 30)
+            .padding(.bottom, 80) // 내부 여백 추가
         }
     }
 }
