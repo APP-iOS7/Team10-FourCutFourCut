@@ -3,6 +3,7 @@ import SwiftUI
 struct FrameImages: View {
     @Binding var displayedImages: [Image?]
     var backgroundImage: String?
+    var showDeleteButtons: Bool = true
 
     var body: some View {
         ZStack {
@@ -11,12 +12,10 @@ struct FrameImages: View {
                 Image(bgImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: 270, maxHeight: 650)
                     .clipped()
-                    .ignoresSafeArea()
             } else {
                 Color.black
-                    .ignoresSafeArea()
             }
 
             // VStack 설정
@@ -39,7 +38,7 @@ struct FrameImages: View {
                                     .clipShape(Circle())
                                     .padding(5)
                             }
-                            .position(x: 190, y: 20) // 버튼 위치 조정
+                            .position(x: 125, y: 25) // 버튼 위치 조정
                         }
                     } else {
                         Rectangle()
