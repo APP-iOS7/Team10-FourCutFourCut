@@ -10,7 +10,14 @@ struct FrameImages: View {
             // 배경 이미지 설정
             if let bgImage = backgroundImage {
                 Image(bgImage)
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fill)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .clipped()
+//                    .ignoresSafeArea()
+                
                     .resizable()
+
                     .aspectRatio(contentMode: .fill)
                     .frame(maxWidth: 270, maxHeight: 650)
                     .clipped()

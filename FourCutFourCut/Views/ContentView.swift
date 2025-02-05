@@ -31,6 +31,7 @@ struct ContentView: View {
                 .font(.title)
                 .foregroundColor(.black)
                 .padding(.top, 20)
+                .zIndex(1) // 항상 위에 있도록 설정
             
             // 상단 여백
             Spacer()
@@ -64,28 +65,29 @@ struct ContentView: View {
                                         .stroke(Color.black, lineWidth: backgroundImage == imageName ? 3 : 0)
                                 )
                         }
-                    }
+                    } 
+                    .padding()
                 }
-            }
-            .padding(.vertical, 10)
-            
-            // 하단 기능 버튼
-            HStack(spacing: 20) {
-                // 사진 선택 버튼
-                PhotosPicker(
-                    selection: $selectedPhotos,
-                    maxSelectionCount: 4,
-                    matching: .images
-                ) {
-                    Text("사진 선택하기")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
+                .padding(.vertical, 10)
                 
-                // 완성된 이미지 저장 버튼
-                Button(action: {
+                // 하단 기능 버튼
+                HStack(spacing: 20) {
+                    // 사진 선택 버튼
+                    PhotosPicker(
+                        selection: $selectedPhotos,
+                        maxSelectionCount: 4,
+                        matching: .images
+                    ) {
+                        Text("사진 선택하기")
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding()
+                            .background(Color.black)
+                            .cornerRadius(10)
+                    }
+                     
+                    // 완성된 이미지 저장 버튼
+                     Button(action: {
                    showDeleteButtons = false
                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                        saveToPhotoAlbum()
@@ -96,19 +98,21 @@ struct ContentView: View {
                        .padding()
                        .background(Color.blue)
                        .cornerRadius(10)
-               }
+                }
+                .padding(.bottom, 20)
             }
-            .padding(.bottom, 20)
-        }
-        // 사진이 선택될 때마다 이미지 로드 함수 실행
-        .onChange(of: selectedPhotos) { _, _ in
-            loadTransferable()
-        }
-        // 저장 완료 알림창
-        .alert("저장 완료", isPresented: $showingSaveAlert) {
-            Button("확인", role: .cancel) { }
-        } message: {
-            Text("이미지가 앨범에 저장되었습니다.")
+            // 사진이 선택될 때마다 이미지 로드 함수 실행
+            .onChange(of: selectedPhotos) { _, _ in
+                loadTransferable()
+            }
+            // 저장 완료 알림창
+            .alert("저장 완료", isPresented: $showingSaveAlert) {
+                Button("확인", role: .cancel) { }
+            } message: {
+                Text("이미지가 앨범에 저장되었습니다.")
+
+
+            }
         }
     }
     
@@ -145,6 +149,8 @@ struct ContentView: View {
                 }
             }
         }
+        // PhotosPicker 재진입시 기존 선택 이미지 초기화
+        selectedPhotos.removeAll()
     }
     
     // 특정 인덱스의 이미지를 제거하는 함수
