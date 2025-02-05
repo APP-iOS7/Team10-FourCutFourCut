@@ -28,17 +28,21 @@ struct FrameImages: View {
                                 .scaledToFill()
                                 .frame(width: 250, height: 150)
                                 .clipped()
-                            Button(action: {
-                                displayedImages[index] = nil
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.white)
-                                    .padding(8)
-                                    .background(Color.black.opacity(0.6))
-                                    .clipShape(Circle())
-                                    .padding(5)
+                            
+                            if showDeleteButtons {
+                                Button(action: {
+                                    displayedImages[index] = nil
+                                }) {
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.white)
+                                        .padding(8)
+                                        .background(Color.black.opacity(0.6))
+                                        .clipShape(Circle())
+                                        .padding(5)
+                                }
+                                .position(x: 125, y: 25)
                             }
-                            .position(x: 125, y: 25) // 버튼 위치 조정
+
                         }
                     } else {
                         Rectangle()
