@@ -1,10 +1,3 @@
-//
-//  FourCutFourCutApp.swift
-//  FourCutFourCut
-//
-//  Created by 조영민 on 2/4/25.
-//
-
 import SwiftUI
 import SwiftData
 

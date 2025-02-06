@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  FourCutFourCut
-//
-//  Created by 조영민 on 2/4/25.
-//
-
 import SwiftUI
 import PhotosUI
 
@@ -18,25 +11,19 @@ struct ContentView: View {
     // 선택된 배경 이미지를 저장하는 상태 변수
     @State private var backgroundImage: String? = nil
     @State private var showDeleteButtons = true
+    @State private var frame: Frame = .two_two
     
     // 사용 가능한 배경 이미지 목록
     let backgroundImages = ["bg1", "bg2", "bg3", "bg4", "bg5"]
     
     var body: some View {
-        GeometryReader { geometry in
+        NavigationStack {
             VStack {
-                Text("포컷포컷")
-                    .bold()
-                    .font(.title)
-                    .foregroundColor(.black)
-                    .padding(.top, 20)
-                    .zIndex(1) // 항상 위에 있도록 설정
-                
-                // 상단 여백
+               
                 Spacer()
                 
                 ZStack {
-                    FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons)
+                    FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons, frame: frame)
                         .frame(width: 250, height: 550)
                         .scaleEffect(0.8)
                 }
@@ -45,6 +32,8 @@ struct ContentView: View {
                         showDeleteButtons = true
                     }
                 )
+                
+                Spacer()
                 
                 // 배경 이미지 선택을 위한 가로 스크롤 뷰
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -111,7 +100,24 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 20)
             }
-            
+            .toolbar {
+                ToolbarItem {
+                    Menu {
+                        Picker(selection: $frame) {
+                            ForEach(Frame.allCases, id: \.self) { frameOption in
+                                Text(frameOption.rawValue).tag(frameOption)
+                            }
+                        } label: {
+                            Text("Frame")
+                        }
+
+                    } label: {
+                        Text("Frame")
+                    }
+                }
+            }
+            .navigationTitle("포컷포컷")
+            .navigationBarTitleDisplayMode(.inline)
         }
         // 사진이 선택될 때마다 이미지 로드 함수 실행
         .onChange(of: selectedPhotos) { _, _ in
@@ -128,8 +134,7 @@ struct ContentView: View {
     // 완성된 이미지를 사진 앨범에 저장하는 함수
     private func saveToPhotoAlbum() {
         let renderer = ImageRenderer(content: ZStack {
-            FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false)
-                .frame(width: 240, height: 700)
+            FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false, frame: frame)
         })
         renderer.scale = UIScreen.main.scale
         
