@@ -9,12 +9,12 @@ struct ContentView: View {
     // 저장 완료 알림창 표시 여부를 제어하는 상태 변수
     @State private var showingSaveAlert = false
     // 선택된 배경 이미지를 저장하는 상태 변수
-    @State private var backgroundImage: String? = nil
+    @State private var backgroundImage: String? = "bg0"
     @State private var showDeleteButtons = true
     @State private var frame: Frame = .two_two
     
     // 사용 가능한 배경 이미지 목록
-    let backgroundImages = ["bg1", "bg2", "bg3", "bg4", "bg5"]
+    let backgroundImages = ["bg0", "bg1", "bg2", "bg3", "bg4", "bg5"]
     
     var body: some View {
         NavigationStack {
@@ -23,9 +23,10 @@ struct ContentView: View {
                 Spacer()
                 
                 ZStack {
-                    FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons, frame: frame)
-                        .frame(width: 250, height: 550)
+                    FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons, frame: $frame)
+                        .frame(maxWidth: 250, maxHeight: frame == .two_two ? 450 : 550)
                         .scaleEffect(0.8)
+                        .border(.black, width: 1)
                 }
                 .overlay(
                     Color.clear.onAppear {
@@ -47,11 +48,11 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 80, height: 50)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .clipShape(RoundedRectangle(cornerRadius: 7))
                                     .overlay(
-                                        // 선택된 배경 이미지에 흰색 테두리 표시
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.black, lineWidth: backgroundImage == imageName ? 3 : 0)
+                                        // 선택된 배경 이미지에 검정 테두리 표시
+                                        RoundedRectangle(cornerRadius: 7)
+                                            .stroke(Color.black, lineWidth: backgroundImage == imageName ? 3 : 1)
                                     )
                             }
                         }
@@ -134,7 +135,7 @@ struct ContentView: View {
     // 완성된 이미지를 사진 앨범에 저장하는 함수
     private func saveToPhotoAlbum() {
         let renderer = ImageRenderer(content: ZStack {
-            FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false, frame: frame)
+            FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false, frame: $frame)
         })
         renderer.scale = UIScreen.main.scale
         

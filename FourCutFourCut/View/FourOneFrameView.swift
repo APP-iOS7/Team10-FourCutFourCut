@@ -37,8 +37,7 @@ struct FourOneFrame: View {
                 }
             }
         }
-        .padding(.top, 30)
-        .padding(.bottom, 80)
+        .padding(.bottom, 180)
     }
 }
 

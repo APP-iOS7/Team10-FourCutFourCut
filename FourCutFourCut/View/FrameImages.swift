@@ -4,7 +4,7 @@ struct FrameImages: View {
     @Binding var displayedImages: [Image?]
     var backgroundImage: String?
     var showDeleteButtons: Bool = true
-    var frame: Frame
+    @Binding var frame: Frame
     
     var body: some View {
         ZStack {
@@ -12,8 +12,9 @@ struct FrameImages: View {
                 Image(bgImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: frame.size.width, height: frame.size.height)
+                    .frame(width: frame.size.width, height: frame == .two_two ? 550 : 680)
                     .clipped()
+                    //.border(.red, width: 1)
             } else {
                 Color.black
                     .frame(width: frame.size.width, height: frame.size.height)

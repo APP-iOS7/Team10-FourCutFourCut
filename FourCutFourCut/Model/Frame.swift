@@ -9,7 +9,7 @@ enum Frame: String, CaseIterable {
         case .four_one:
             return CGSize(width: 250, height: 600)
         case .two_two:
-            return CGSize(width: 300, height: 300)
+            return CGSize(width: 300, height: 500)
         }
     }
 }

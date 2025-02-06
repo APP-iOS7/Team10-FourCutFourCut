@@ -45,8 +45,8 @@ struct TwoTwoFrameView: View {
                 }
             }
         }
-        .padding(.top, 40)
-        .padding(.bottom, 50)
+//        .padding(.top, 0)
+        //.padding(.bottom, 170)
         .padding(.horizontal, 10)
     }
 }
