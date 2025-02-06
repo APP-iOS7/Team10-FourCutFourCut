@@ -21,7 +21,7 @@
 
 ## 프로젝트 설명
 
-| <img src=![Image](https://github.com/user-attachments/assets/431aa614-ef0e-4c51-ad66-88a05111685c)> | <img src="image/SelectPic.png"> | <img src="image/SaveScreen.png"> |
+| "<img src=![Image](https://github.com/user-attachments/assets/431aa614-ef0e-4c51-ad66-88a05111685c)>" | <img src="image/SelectPic.png"> | <img src="image/SaveScreen.png"> |
 | :-------------------------------: | :-----------------------------: | :------------------------------: |
 |             시작화면              |            사진 선택            |           저장된 사진            |
 
