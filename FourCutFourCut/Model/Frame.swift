@@ -7,9 +7,9 @@ enum Frame: String, CaseIterable {
     var size: CGSize {
         switch self {
         case .four_one:
-            return CGSize(width: 250, height: 550)
+            return CGSize(width: 250, height: 700)
         case .two_two:
-            return CGSize(width: 350, height: 550)
+            return CGSize(width: 400, height: 600)
         }
     }
 }

@@ -26,6 +26,8 @@ struct ContentView: View {
                     FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons, frame: $frame)
                         .frame(maxWidth: frame.size.width, maxHeight: frame.size.height)
                         .border(.black, width: 1)
+                        .scaleEffect(0.8)
+                        
                 }
                 .overlay(
                     Color.clear.onAppear {

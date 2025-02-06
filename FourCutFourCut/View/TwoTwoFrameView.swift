@@ -1,10 +1,3 @@
-//
-//  TwoTwoFrameView.swift
-//  FourCutFourCut
-//
-//  Created by 최시온 on 2/5/25.
-//
-
 import SwiftUI
 
 struct TwoTwoFrameView: View {
@@ -12,17 +5,17 @@ struct TwoTwoFrameView: View {
     var showDeleteButtons: Bool
     let frameSize: CGSize
     
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 60), count: 2)
     
     var body: some View {
-        LazyVGrid(columns: columns) {
+        LazyVGrid(columns: columns, spacing: 0) {
             ForEach(0..<4, id: \.self) { index in
                 if let image = displayedImages[index] {
                     ZStack {
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: frameSize.width / 2 - 20, height: frameSize.height / 2 - 20)
+                            .frame(width: frameSize.width / 2 - 40, height: frameSize.height / 2 - 40)
                             .clipped()
                         if showDeleteButtons {
                             Button(action: {
@@ -41,13 +34,14 @@ struct TwoTwoFrameView: View {
                 } else {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: frameSize.width / 2 - 20, height: frameSize.height / 2 - 20)
+                        .frame(width: frameSize.width / 2 - 40, height: frameSize.height / 2 - 100)
+                        .padding(.vertical, 15)
                 }
             }
         }
-        .padding(.top, 150)
-        .padding(.horizontal, 10)
-        .padding(.bottom, 160)
+        .padding(.top, 20)
+        .padding(.all, 50)
+        .padding(.bottom, 150)
     }
 }
 
