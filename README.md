@@ -1,6 +1,6 @@
 # FourCutFourCut! 📸
 ![Swift](https://img.shields.io/badge/Swift-6.0-F05138?logo=swift)
-![Platform](https://img.shields.io/badge/Platforms-iOS%2018.0+-007AFF?logo=apple)
+![Platform](https://img.shields.io/badge/Platforms-iOS%2017.0+-007AFF?logo=apple)
 
     좋아하는 사진들로만 골라서 본인만의 인생네컷을 만들어 보아요!
     카메라 앞에선 뚝딱이가 되기 쉬운 사람들 주목!
