@@ -15,8 +15,9 @@ struct TwoTwoFrameView: View {
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: frameSize.width / 2 - 40, height: frameSize.height / 2 - 40)
+                            .frame(width: frameSize.width / 2 - 40, height: frameSize.height / 2 - 100)
                             .clipped()
+                            .padding(.vertical, 15)
                         if showDeleteButtons {
                             Button(action: {
                                 displayedImages[index] = nil
@@ -28,7 +29,7 @@ struct TwoTwoFrameView: View {
                                     .clipShape(Circle())
                                     .padding(5)
                             }
-                            .position(x: frameSize.width / 4, y: 25)
+                            .position(x: frameSize.width / 4 - 20, y: 40)
                         }
                     }
                 } else {
