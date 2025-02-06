@@ -21,7 +21,7 @@
 
 ## 프로젝트 설명
 
-| ![Image](https://github.com/user-attachments/assets/431aa614-ef0e-4c51-ad66-88a05111685c)> | ![Image](https://github.com/user-attachments/assets/84ce0970-94d1-499e-8ad1-d4d5fa5b76f0) | ![Image](https://github.com/user-attachments/assets/e59a0249-1cfa-4060-9349-a1cd6060ff6c) |
+| ![Image](https://github.com/user-attachments/assets/431aa614-ef0e-4c51-ad66-88a05111685c) | ![Image](https://github.com/user-attachments/assets/84ce0970-94d1-499e-8ad1-d4d5fa5b76f0) | ![Image](https://github.com/user-attachments/assets/e59a0249-1cfa-4060-9349-a1cd6060ff6c) |
 | :-------------------------------: | :-----------------------------: | :------------------------------: |
 |             시작화면              |            사진 선택            |           저장된 사진            |
 
