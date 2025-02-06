@@ -12,7 +12,7 @@ struct TwoTwoFrameView: View {
     var showDeleteButtons: Bool
     let frameSize: CGSize
     
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
     
     var body: some View {
         LazyVGrid(columns: columns) {
@@ -45,9 +45,9 @@ struct TwoTwoFrameView: View {
                 }
             }
         }
-//        .padding(.top, 0)
-        //.padding(.bottom, 170)
+        .padding(.top, 150)
         .padding(.horizontal, 10)
+        .padding(.bottom, 160)
     }
 }
 

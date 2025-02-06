@@ -24,8 +24,7 @@ struct ContentView: View {
                 
                 ZStack {
                     FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: showDeleteButtons, frame: $frame)
-                        .frame(maxWidth: 250, maxHeight: frame == .two_two ? 450 : 550)
-                        .scaleEffect(0.8)
+                        .frame(maxWidth: frame.size.width, maxHeight: frame.size.height)
                         .border(.black, width: 1)
                 }
                 .overlay(
@@ -136,6 +135,7 @@ struct ContentView: View {
     private func saveToPhotoAlbum() {
         let renderer = ImageRenderer(content: ZStack {
             FrameImages(displayedImages: $displayedImages, backgroundImage: backgroundImage, showDeleteButtons: false, frame: $frame)
+                .frame(width: frame.size.width, height: frame.size.height)
         })
         renderer.scale = UIScreen.main.scale
         
@@ -151,7 +151,7 @@ struct ContentView: View {
     
     // 선택된 사진들을 로드하여 화면에 표시하는 함수
     private func loadTransferable() {
-        for (index, photoItem) in selectedPhotos.enumerated() {
+        for (index, photoItem) in selectedPhotos.enumerated() {   
             if index < 4 {
                 photoItem.loadTransferable(type: Data.self) { result in
                     DispatchQueue.main.async {
