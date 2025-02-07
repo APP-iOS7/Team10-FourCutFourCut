@@ -57,28 +57,28 @@
 
 |                                        프레임 변경                                        |
 | :---------------------------------------------------------------------------------------: |
-| ![Image](https://github.com/user-attachments/assets/35bb7825-2de5-4bc7-8a57-bc6e4c7a6756) |
+| ![Image](https://github.com/user-attachments/assets/16a402b7-0322-4b3b-9b15-aa1e28575e60) |
 
 Frame 버튼을 누르면 4x1 프레임과 2x2 프레임 둘 중 하나를 선택할 수 있습니다.
 <br/> <br/><br/> 
 
 |                                         필터 변경                                         |
 | :---------------------------------------------------------------------------------------: |
-| ![Image](https://github.com/user-attachments/assets/e5b6bb10-d41b-4bd9-98ca-81b8663c9030) |
+| ![Image](https://github.com/user-attachments/assets/c84a611d-9a17-4e9b-bfb5-3f6bd3415ad6) |
 
 아래에 필터 변경 버튼을 누르면 필터 또한 변경 가능합니다.
 <br/> <br/><br/> 
 
 |                                   사진 선택과 삭제 가능                                   |
 | :---------------------------------------------------------------------------------------: |
-| ![Image](https://github.com/user-attachments/assets/16a402b7-0322-4b3b-9b15-aa1e28575e60) |
+| ![Image](https://github.com/user-attachments/assets/e5b6bb10-d41b-4bd9-98ca-81b8663c9030) |
 
 사진 선택하기 버튼을 누르면 4가지 사진 선택 가능하며, 휴지통 버튼을 누르면 삭제도 가능합니다.
 <br/> <br/><br/> 
 
 |                                     이미지 저장 가능                                      |
 | :---------------------------------------------------------------------------------------: |
-| ![Image](https://github.com/user-attachments/assets/c84a611d-9a17-4e9b-bfb5-3f6bd3415ad6) |
+| ![Image](https://github.com/user-attachments/assets/35bb7825-2de5-4bc7-8a57-bc6e4c7a6756) |
 
 이미지 저장 버튼을 누르면 필터를 적용한 프레임까지 포함하여 앨범에 저장 가능합니다.
 <br/> <br/><br/> 
